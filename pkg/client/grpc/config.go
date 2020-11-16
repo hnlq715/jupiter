@@ -137,7 +137,7 @@ func (config *Config) Build() *grpc.ClientConn {
 	}
 
 	if strings.HasPrefix(config.Address, "grpc:") {
-		config.Address += "grpc:///"
+		config.Address = "grpc:///" + config.Address
 	}
 
 	return newGRPCClient(config)
