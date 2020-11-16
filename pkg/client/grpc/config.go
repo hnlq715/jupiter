@@ -15,7 +15,6 @@
 package grpc
 
 import (
-	"strings"
 	"time"
 
 	"github.com/douyu/jupiter/pkg/conf"
@@ -134,10 +133,6 @@ func (config *Config) Build() *grpc.ClientConn {
 		config.dialOptions = append(config.dialOptions,
 			grpc.WithChainUnaryInterceptor(metricUnaryClientInterceptor(config.Name)),
 		)
-	}
-
-	if strings.HasPrefix(config.Address, "grpc:") {
-		config.Address = "grpc:///" + config.Address
 	}
 
 	return newGRPCClient(config)
