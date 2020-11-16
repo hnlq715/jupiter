@@ -15,11 +15,12 @@
 package grpc
 
 import (
-	"github.com/douyu/jupiter/pkg/util/xtime"
+	"strings"
 	"time"
 
 	"github.com/douyu/jupiter/pkg/conf"
 	"github.com/douyu/jupiter/pkg/ecode"
+	"github.com/douyu/jupiter/pkg/util/xtime"
 	"github.com/douyu/jupiter/pkg/xlog"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/balancer/roundrobin"
@@ -133,6 +134,10 @@ func (config *Config) Build() *grpc.ClientConn {
 		config.dialOptions = append(config.dialOptions,
 			grpc.WithChainUnaryInterceptor(metricUnaryClientInterceptor(config.Name)),
 		)
+	}
+
+	if strings.HasPrefix(config.Address, "grpc:") {
+		config.Address += "grpc:///"
 	}
 
 	return newGRPCClient(config)
