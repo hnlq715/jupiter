@@ -94,5 +94,8 @@ func (s *Server) Info() *server.ServiceInfo {
 		server.WithAddress(serviceAddress),
 		server.WithKind(constant.ServiceProvider),
 	)
+
+	info.Deployment = s.Deployment
+
 	return &info
 }
